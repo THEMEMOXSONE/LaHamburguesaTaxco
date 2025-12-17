@@ -1,0 +1,147 @@
+/* resources/css/mesas.css */
+
+.mesa-selector-container {
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.zona-selector {
+    padding: 0.5rem 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: white;
+    font-size: 1rem;
+    cursor: pointer;
+    width: 150px;
+}
+
+.mapa-mesas h3 {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+    color: #333;
+}
+
+.mesa-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); /* Ajusta el tamaño de la mesa */
+    gap: 1rem; /* Espacio entre mesas */
+    padding: 1rem;
+    background-color: #e0f2f7; /* Color azul claro del fondo del mapa */
+    border-radius: 8px;
+}
+
+.mesa {
+    padding: 1.5rem 0.5rem;
+    border-radius: 8px;
+    text-align: center;
+    font-weight: bold;
+    color: #333;
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.mesa:hover {
+    transform: translateY(-2px);
+}
+
+.mesa.libre {
+    background-color: #cccccc; /* Gris */
+}
+
+.mesa.ocupada {
+    background-color: #28a745; /* Verde */
+    color: white;
+}
+
+.mapa-mesas.hidden {
+    display: none;
+}
+
+/* Estilos del logo y menú de encabezado */
+.restaurant-logo {
+    width: 50px; /* Ajusta el tamaño de tu logo */
+    height: 50px;
+    border-radius: 50%; /* Si quieres que sea circular */
+    object-fit: cover; /* Para que la imagen no se distorsione */
+}
+
+.main-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem 1.5rem; /* Ajusta el padding */
+    background-color: #333; /* Fondo oscuro */
+    color: white;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.logo-container a {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+}
+
+.menu-toggle {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.8rem;
+    cursor: pointer;
+    padding: 0.5rem;
+    display: block; /* Siempre visible en móvil */
+    z-index: 1001; /* Asegura que esté por encima del nav */
+}
+
+.main-nav {
+    position: fixed;
+    top: 0;
+    right: -250px; /* Escondido por defecto */
+    width: 250px;
+    height: 100%;
+    background-color: #222; /* Fondo del menú */
+    box-shadow: -2px 0 5px rgba(0,0,0,0.3);
+    transition: right 0.3s ease-in-out;
+    padding-top: 60px; /* Deja espacio para el header */
+    z-index: 999;
+}
+
+.main-nav.active {
+    right: 0; /* Visible */
+}
+
+.main-nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.main-nav li {
+    border-bottom: 1px solid #444;
+}
+
+.main-nav a,
+.main-nav button {
+    display: block;
+    width: 100%;
+    padding: 1rem 1.5rem;
+    color: white;
+    text-decoration: none;
+    background: none;
+    border: none;
+    text-align: left;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.main-nav a:hover,
+.main-nav button:hover {
+    background-color: #444;
+}

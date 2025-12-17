@@ -1,0 +1,25 @@
+# docker-compose.yml
+
+version: '3.8'
+services:
+  db:
+    image: mysql:8.0
+    container_name: hamburguesa-db
+    restart: unless-stopped
+    
+    # Esta es la contraseña que usará tu BD. ¡Cámbiala por una tuya!
+    environment:
+      MYSQL_DATABASE: hamburguesa_db
+      MYSQL_ROOT_PASSWORD: Holamemo12
+    
+    # Esto conecta el puerto de Docker a tu PC para que TablePlus lo vea
+    ports:
+      - "3306:3306"
+      
+    # Esto guarda tus datos de forma permanente en una carpeta
+    volumes:
+      - hamburguesa-data:/var/lib/mysql
+
+# Docker gestiona este volumen por ti
+volumes:
+  hamburguesa-data:
