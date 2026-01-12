@@ -125,6 +125,61 @@ document.addEventListener('DOMContentLoaded', () => {
             });
     };
 
+   window.cambiarCantidad = function(detalleId, accion) {
+    // Protección contra doble clic y validación de token
+    const tokenMeta = document.querySelector('meta[name="csrf-token"]');
+    const csrfToken = tokenMeta ? tokenMeta.getAttribute('content') : '';
+
+    fetch('/orden/actualizar-cantidad', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': csrfToken
+        },
+        body: JSON.stringify({
+            detalle_id: detalleId, 
+            accion: accion
+        })
+    })
+    .then(res => res.json())
+    .then(data => {
+        if(data.success) {
+            location.reload(); 
+        } else {
+            alert(data.message || 'Error al actualizar');
+        }
+    })
+    .catch(err => console.error(err));
+}; // <--- No olvides el punto y coma aquí
+
+// CAMBIO 2: Agregamos "window." al principio
+window.eliminarItem = function(detalleId) {
+    if(!confirm('¿Eliminar este producto?')) return;
+
+    const tokenMeta = document.querySelector('meta[name="csrf-token"]');
+    const csrfToken = tokenMeta ? tokenMeta.getAttribute('content') : '';
+
+    fetch('/orden/eliminar-detalle', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': csrfToken
+        },
+        body: JSON.stringify({
+            detalle_id: detalleId
+        })
+    })
+    .then(res => res.json())
+    .then(data => {
+        if(data.success) {
+            location.reload();
+        } else {
+            alert('No se pudo eliminar el producto');
+        }
+    })
+    .catch(err => console.error(err));
+};
+
     // Lógica Móvil
     const mobileMenuBtn = document.getElementById('mobile-menu-btn');
     const mobileCartBtn = document.getElementById('mobile-cart-btn');

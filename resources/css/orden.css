@@ -216,30 +216,12 @@ body {
 /* --- 3. CARRITO (Derecha - OSCURO - Punto 4) --- */
 .sidebar-carrito {
     background-color: #000000;
-    /* Carrito negro */
     color: var(--text-on-dark);
-    /* Texto blanco (Punto 4) */
     border-left: 1px solid var(--border-dark);
     display: flex;
     flex-direction: column;
     z-index: 30;
-}
-
-/* Forzar ancho mínimo y mantener el footer visible en escritorio */
-.sidebar-carrito {
-    min-width: 320px;
-}
-
-.sidebar-carrito .cart-footer {
-    position: sticky;
-    bottom: 0;
-    z-index: 12;
-}
-
-/* Asegurar botón de pagar visible en desktop */
-.btn-checkout {
-    background-color: var(--accent);
-    color: var(--text-on-dark);
+    min-width: 320px; /* Forzar ancho mínimo */
 }
 
 .cart-header {
@@ -249,6 +231,7 @@ body {
     font-weight: 700;
     display: flex;
     justify-content: space-between;
+    align-items: center; /* Alineación centrada verticalmente */
 }
 
 .cart-items-container {
@@ -257,13 +240,21 @@ body {
     padding: 20px;
 }
 
+/* --- TARJETA DEL PRODUCTO EN CARRITO --- */
 .cart-item-row {
-    background-color: var(--bg-card);
-    padding: 10px;
+    background-color: var(--bg-card); /* Mantiene tu estilo de tarjeta */
+    padding: 12px;
     border-radius: 10px;
     margin-bottom: 10px;
     display: flex;
-    gap: 10px;
+    gap: 12px;
+    align-items: flex-start;
+    border: 1px solid transparent;
+    transition: border-color 0.2s;
+}
+
+.cart-item-row:hover {
+    border-color: rgba(255, 255, 255, 0.1);
 }
 
 .item-img img {
@@ -271,28 +262,125 @@ body {
     height: 50px;
     border-radius: 8px;
     object-fit: cover;
+    border: 1px solid #333;
+}
+
+/* Contenedor de info */
+.item-details {
+    flex: 1; /* Ocupa el espacio restante */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+/* Cabecera interna: Título + Botón Eliminar */
+.header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    width: 100%;
+    margin-bottom: 4px;
 }
 
 .item-details h4 {
     margin: 0;
-    font-size: 0.9rem;
-    color: white;
+    font-size: 0.95rem;
+    color: var(--text-on-dark);
+    font-weight: 600;
+    line-height: 1.2;
+    padding-right: 10px; /* Espacio para no chocar con la X */
 }
 
+/* BOTÓN ELIMINAR (X) */
+.btn-remove {
+    background: none;
+    border: none;
+    color: #ef4444; /* Rojo moderno */
+    font-size: 1.2rem;
+    line-height: 0.8;
+    cursor: pointer;
+    padding: 0;
+    opacity: 0.8;
+    transition: opacity 0.2s, transform 0.2s;
+}
+
+.btn-remove:hover {
+    opacity: 1;
+    transform: scale(1.2);
+    color: #ff0000;
+}
+
+/* Notas */
+.item-notes {
+    font-size: 0.8rem;
+    color: #9ca3af;
+    margin: 0 0 8px 0;
+    font-style: italic;
+}
+
+/* Fila inferior: Controles cantidad + Precio */
 .item-meta {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     margin-top: 5px;
-    font-size: 0.85rem;
-    color: #aaa;
 }
 
-.cart-footer {
+/* CONTROLES DE CANTIDAD (+ -) */
+.qty-controls {
+    display: flex;
+    align-items: center;
+    background-color: #2a2a2a; /* Ligeramente más claro que el bg-card */
+    border-radius: 6px;
+    border: 1px solid var(--border-dark);
+    overflow: hidden;
+}
+
+.btn-qty {
+    background-color: transparent;
+    color: var(--text-on-dark);
+    border: none;
+    width: 26px;
+    height: 26px;
+    font-size: 1rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s;
+}
+
+.btn-qty:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.qty-number {
+    font-size: 0.85rem;
+    font-weight: 700;
+    padding: 0 6px;
+    min-width: 20px;
+    text-align: center;
+    color: white;
+}
+
+/* PRECIO */
+.item-meta .price {
+    color: var(--accent); /* Dorado para el precio */
+    font-weight: 700;
+    font-size: 0.95rem;
+}
+
+/* --- FOOTER DEL CARRITO --- */
+.sidebar-carrito .cart-footer {
+    position: sticky;
+    bottom: 0;
+    z-index: 12;
+    background-color: #000; /* Asegurar fondo negro para tapar scroll */
     padding: 25px;
-    background-color: #000;
     border-top: 1px solid var(--border-dark);
 }
 
+/* Resto de tus estilos footer se mantienen igual... */
 .totals .row {
     display: flex;
     justify-content: space-between;

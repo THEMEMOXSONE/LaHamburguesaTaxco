@@ -105,19 +105,31 @@
                         @endphp
 
                         <div class="cart-item-row">
-                            <div class="item-img">
-                                <img src="{{ $imgItem }}">
-                            </div>
-                            <div class="item-details">
-                                <h4>{{ $item->producto->nombre }}</h4>
-                                @if($item->notas)
-                                <p class="item-notes">+ {{ $item->notas }}</p> @endif
-                                <div class="item-meta">
-                                    <span>x{{ $item->cantidad }}</span>
-                                    <span class="price">${{ number_format($item->precio * $item->cantidad, 2) }}</span>
-                                </div>
-                            </div>
-                        </div>
+        <div class="item-img">
+            <img src="{{ $imgItem }}">
+        </div>
+        
+        <div class="item-details">
+            <div class="header-row">
+                <h4>{{ $item->producto->nombre }}</h4>
+                <button onclick="eliminarItem({{ $item->id_detalle }})" class="btn-remove" title="Quitar">&times;</button>
+            </div>
+
+            @if($item->notas)
+                <p class="item-notes">+ {{ $item->notas }}</p> 
+            @endif
+
+            <div class="item-meta">
+                <div class="qty-controls">
+                    <button onclick="cambiarCantidad({{ $item->id_detalle }}, 'decrementar')" class="btn-qty">-</button>
+                    <span class="qty-number">{{ $item->cantidad }}</span>
+                    <button onclick="cambiarCantidad({{ $item->id_detalle }}, 'incrementar')" class="btn-qty">+</button>
+                </div>
+
+                <span class="price">${{ number_format($item->precio * $item->cantidad, 2) }}</span>
+            </div>
+        </div>
+    </div>
                     @endforeach
                 @endif
             </div>

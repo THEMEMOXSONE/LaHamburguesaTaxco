@@ -129,6 +129,62 @@ class OrdenController extends Controller
         ]);
     }
 
+    public function actualizarCantidad(Request $request)
+    {
+        $request->validate([
+            // Aquí le decimos: busca en la tabla 'detalle_orden', columna 'id_detalle'
+            'detalle_id' => 'required|exists:detalle_orden,id_detalle', 
+            'accion' => 'required|in:incrementar,decrementar'
+        ]);
+
+        // Buscamos usando el ID que nos llega
+        $detalle = DetalleOrden::find($request->detalle_id);
+        
+        if($request->accion == 'incrementar') {
+            $detalle->cantidad += 1;
+        } else {
+            if($detalle->cantidad > 1) {
+                $detalle->cantidad -= 1;
+            } else {
+                return response()->json(['success' => false, 'message' => 'Mínimo 1']);
+            }
+        }
+        
+        $detalle->save();
+
+        // Recalcular total orden
+        $orden = $detalle->orden;
+        $nuevoTotal = $orden->detalles->sum(function($item) {
+            return $item->cantidad * $item->precio;
+        });
+        $orden->total = $nuevoTotal;
+        $orden->save();
+
+        return response()->json(['success' => true]);
+    }
+
+    public function eliminarDetalle(Request $request)
+    {
+        $request->validate([
+            'detalle_id' => 'required|exists:detalle_orden,id_detalle'
+        ]);
+
+        $detalle = DetalleOrden::find($request->detalle_id);
+        $orden = $detalle->orden;
+
+        $detalle->delete();
+
+        // Recalcular
+        $orden->load('detalles');
+        $nuevoTotal = $orden->detalles->sum(function($item) {
+            return $item->cantidad * $item->precio;
+        });
+        $orden->total = $nuevoTotal;
+        $orden->save();
+
+        return response()->json(['success' => true]);
+    }
+
     /**
      * Cierra la orden: la marca como pagada y libera la mesa.
      */

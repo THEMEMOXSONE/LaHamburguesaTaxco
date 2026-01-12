@@ -55,6 +55,13 @@ Route::middleware(['auth'])->group(function () {
     // Ruta para agregar items en lote a la orden
     Route::post('/orden/{orden}/agregar', [OrdenController::class, 'agregarItems'])
         ->name('orden.agregar');
+        
+    Route::post('/orden/actualizar-cantidad', [OrdenController::class, 'actualizarCantidad'])
+        ->name('orden.actualizarCantidad');
+
+    // Ruta para eliminar item del carrito
+    Route::post('/orden/eliminar-detalle', [OrdenController::class, 'eliminarDetalle'])
+        ->name('orden.eliminarDetalle');
 
     // Ruta para cerrar una orden (marcar como pagada y liberar la mesa)
     Route::post('/orden/{orden}/cerrar', [OrdenController::class, 'cerrarOrden'])
