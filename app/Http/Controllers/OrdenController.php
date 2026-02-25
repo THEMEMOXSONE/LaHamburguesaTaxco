@@ -277,9 +277,23 @@ class OrdenController extends Controller
     /**
      * Imprime la comanda para cocina (solo productos y notas)
      */
-    public function imprimirComanda(Orden $orden)
+    public function imprimirComanda(Orden $orden, Request $request)
     {
+        // Cargar relaciones necesarias
         $orden->load('detalles.producto', 'mesa', 'usuario');
+
+        if ($request->has('exclude') && !empty($request->exclude)) {
+            $idsExcluidos = explode(',', $request->exclude);
+
+            // Filtrar detalles en memoria (usar 'id_detalle' según tu esquema)
+            $detallesFiltrados = $orden->detalles->filter(function ($detalle) use ($idsExcluidos) {
+                return !in_array((string) $detalle->id_detalle, $idsExcluidos, true);
+            });
+
+            // Sobreescribir la relación para la vista
+            $orden->setRelation('detalles', $detallesFiltrados);
+        }
+
         return view('comanda', compact('orden'));
     }
 }

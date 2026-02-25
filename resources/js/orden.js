@@ -396,7 +396,20 @@ window.imprimirTicket = function() {
 }
 
 window.imprimirComanda = function() {
-    const ordenId = document.getElementById('orden-container').dataset.ordenId;
-    const url = `/imprimir/comanda/${ordenId}`;
+    const ordenContainer = document.getElementById('orden-container');
+    if (!ordenContainer) return;
+    const ordenId = ordenContainer.dataset.ordenId;
+
+    // Recolectar IDs de items marcados (excluidos)
+    const excluidos = [];
+    document.querySelectorAll('.check-exclude:checked').forEach(cb => {
+        if (cb.dataset && cb.dataset.id) excluidos.push(cb.dataset.id);
+    });
+
+    let url = `/imprimir/comanda/${ordenId}`;
+    if (excluidos.length > 0) {
+        url += `?exclude=${excluidos.join(',')}`;
+    }
+
     window.open(url, 'Comanda', 'width=400,height=600,scrollbars=yes');
-}
+};

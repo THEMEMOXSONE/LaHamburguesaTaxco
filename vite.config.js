@@ -11,6 +11,8 @@ export default defineConfig({
                 'resources/js/login.js',
                 'resources/css/mesas.css',
                 'resources/js/mesas.js',
+                'resources/css/orden.css',
+                'resources/js/orden.js',
             
             ],
             refresh: true,
